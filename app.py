@@ -26,9 +26,9 @@ for genre in movie_rating['genres']:
   genre_list = genre.split("|")
   genres.update(genre_list)
 
-selected_genres = st.multiselect("select genre(s)", genres)
-selected_rating = st.select_slider('Select a rating', ['0', '0.5', '1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5'])
-generate_button = st.button('generate!')
+selected_genres = st.multiselect("Select Genre(s)", genres)
+selected_rating = float(st.select_slider('Select a Rating', ['0', '0.5', '1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5']))
+generate_button = st.button('Generate!')
 
 #for genre in genres:
   #movie_rating[genre] = movie_rating['genres'].apply(lambda x:1 if genre in x.split("|") else 0)
@@ -36,14 +36,16 @@ generate_button = st.button('generate!')
 def display_recommendations(df, selected_genres, selected_rating):
     if selected_genres and selected_rating:
         selected_rating = float(selected_rating)
-        filtered_movies = df[(df[selected_genres].sum(axis=1) > 0) & (df['rating'] >= selected_rating)]
+        
+        filtered_movies = df[(df[selected_genres].sum(axis=1) == len(selected_genres)) & (df['rating'] >= selected_rating)]
         if not filtered_movies.empty:
+            st.balloons()
             st.write(filtered_movies['title'])
         else:
-            st.write("no movies found :(")
+            st.error("No Novies Found :(")
+
 
 if generate_button:
-    st.balloons()
     display_recommendations(movie_rating, selected_genres, selected_rating)
    
         
