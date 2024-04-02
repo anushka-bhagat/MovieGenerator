@@ -1,0 +1,28 @@
+import pandas as pd
+
+#movie: movieId, title, genres
+movie = pd.read_csv(path + 'movie.csv')
+
+#rating: userId, movieId, rating, timestamp
+rating = pd.read_csv(path + 'rating.csv')
+
+#merge
+movie_rating = pd.merge(movie,rating, on = 'movieId')
+
+#preprocess data: replace any NaN values with a blank
+movie_rating.fillna('')
+
+#drop duplicates
+movie_rating = movie_rating.drop_duplicates(subset = 'title', keep = 'first')
+
+genres = set()
+
+#add each genre to the empty list 
+for genre in movie_rating['genres']:
+  genre_list = genre.split("|")
+  genres.update(genre_list)
+
+for genre in genres:
+              movie_rating[genre] = movie_rating['genres'].apply(lambda x:1 if genre in x.split("|") else 0)
+                
+movie_rating.to_csv('movie_rating.csv', index=False)
