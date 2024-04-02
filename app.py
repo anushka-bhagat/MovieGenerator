@@ -3,12 +3,12 @@ import pandas as pd
 
 st.title("Movie Reccomendation System")
 
-path = 'MovieLens 20M Dataset/'
+#path = 'MovieLens 20M Dataset/'
 
 #import datatsets
 #movie = pd.read_csv(path + 'movie.csv')
 #rating = pd.read_csv(path + 'rating.csv')
-movie_rating = pd.read_csv(path + 'movie_rating.csv')
+movie_rating = pd.read_csv('movie_rating.csv')
 
 #merge
 #og_movie_rating = pd.merge(movie,rating, on = 'movieId')
