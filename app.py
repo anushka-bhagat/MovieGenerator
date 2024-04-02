@@ -26,9 +26,9 @@ for genre in movie_rating['genres']:
   genre_list = genre.split("|")
   genres.update(genre_list)
 
-selected_genres = st.multiselect("Select genre(s)", genres)
+selected_genres = st.multiselect("select genre(s)", genres)
 selected_rating = st.select_slider('Select a rating', ['0', '0.5', '1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5'])
-generate_button = st.button('Generate!')
+generate_button = st.button('generate!')
 
 #for genre in genres:
   #movie_rating[genre] = movie_rating['genres'].apply(lambda x:1 if genre in x.split("|") else 0)
