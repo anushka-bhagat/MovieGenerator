@@ -40,7 +40,7 @@ def display_recommendations(df, selected_genres, selected_rating):
         if not filtered_movies.empty:
             st.write(filtered_movies['title'])
         else:
-            st.write("No movies found with the selected criteria.")
+            st.write("no movies found :(")
 
 if generate_button:
     st.balloons()
