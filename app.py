@@ -44,9 +44,8 @@ def display_recommendations(df, selected_genres, selected_rating):
         
         if not filtered_movies.empty:
             st.balloons()
-            
-            output = filtered_movies[['title','genres','rating']].style.format({'rating': '{:.1f}'}).hide_index()
-            st.table(output)
+            st.write("Your Personalized Reccomendations:")
+            st.table(filtered_movies[['title', 'genres', 'rating']])
         else:
             st.error("No Novies Found :(")
 
