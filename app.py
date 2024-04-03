@@ -36,9 +36,11 @@ def display_recommendations(df, selected_genres, selected_rating):
             st.balloons()
             st.write("Your Personalized Reccomendations:")
 
-            #display a table with the movie titles, genres, and ratings
+            #format rating to 1 decimal place
+            filtered_movies['rating'] = filtered_movies['rating'].apply(lambda x: f'{x:.1f}')
+            #display a table with the movie titles, genres, and ratings  
             st.table(filtered_movies[['title', 'genres', 'rating']])
-            filtered_movies['rating'] = filtered_movies['rating'].apply(lambda x: f'{x:.1f}')  # Format to 1 decimal place
+
 
         else:
             st.error("No Novies Found :(")
