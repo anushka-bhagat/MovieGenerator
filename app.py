@@ -6,6 +6,7 @@ import pandas as pd
 movie_rating = pd.read_csv('movie_rating.csv')
 
 st.title("🌟Movie Recommendation System🌟")
+st.header("Its Movie Night!!")
 st.markdown("Feeling indecisive? Let me handle that! Select your favorite genres and a preferred rating, then hit generate! 🍿🌟")
 
 #split up and create set of genres
