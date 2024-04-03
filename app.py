@@ -1,7 +1,5 @@
 import streamlit as st
 import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 
 # Import dataset
 movie_rating = pd.read_csv('movie_rating.csv')
