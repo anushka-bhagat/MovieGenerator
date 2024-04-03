@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 
+
 # Import dataset
 movie_rating = pd.read_csv('movie_rating.csv')
 
@@ -36,11 +37,10 @@ def display_recommendations(df, selected_genres, selected_rating):
             st.balloons()
             st.write("Your Personalized Reccomendations:")
 
-            #format rating to 1 decimal place
-            filtered_movies['rating'] = filtered_movies['rating'].apply(lambda x: f'{x:.1f}')
-            #display a table with the movie titles, genres, and ratings  
+            #format ratings to 1 decimal place
+            filtered_movies['rating'] = filtered_movies['rating'].apply(lambda x: f'{x:.1f}')  # Format to 1 decimal place
+            #display a table with the movie titles, genres, and ratings
             st.table(filtered_movies[['title', 'genres', 'rating']])
-
 
         else:
             st.error("No Novies Found :(")
@@ -51,4 +51,3 @@ def display_recommendations(df, selected_genres, selected_rating):
 if generate_button:
     display_recommendations(movie_rating, selected_genres, selected_rating)
    
-
