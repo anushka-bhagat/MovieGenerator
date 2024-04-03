@@ -1,50 +1,44 @@
 import streamlit as st
 import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
-st.title("🌟Movie Reccomendation System🌟")
-st.markdown("Feeling indecisive? Let me handle that! Select your favorite genres and a preferred rating, then hit generate! 🍿🌟")
-
-#path = 'MovieLens 20M Dataset/'
-
-#import datatsets
-#movie = pd.read_csv(path + 'movie.csv')
-#rating = pd.read_csv(path + 'rating.csv')
+# Import dataset
 movie_rating = pd.read_csv('movie_rating.csv')
 
-#merge
-#og_movie_rating = pd.merge(movie,rating, on = 'movieId')
-#movie_rating = og_movie_rating.sample(n=1000)
+st.title("🌟Movie Recommendation System🌟")
+st.markdown("Feeling indecisive? Let me handle that! Select your favorite genres and a preferred rating, then hit generate! 🍿🌟")
 
-#preprocess data: replace any NaN values with a blank
-#movie_rating.fillna('')
-
-#drop duplicates
-#movie_rating = movie_rating.drop_duplicates(subset = 'title', keep = 'first')
-
+#split up and create set of genres
 genres = set()
-
-#add each genre to the empty list 
 for genre in movie_rating['genres']:
   genre_list = genre.split("|")
   genres.update(genre_list)
 
+#prompt user to enter filters
 st.header("Filters:")
 selected_genres = st.multiselect("Select Genre(s)", genres)
 selected_rating = float(st.select_slider('Select a Rating', ['0', '0.5', '1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5']))
 generate_button = st.button('Generate!')
 
-#for genre in genres:
-  #movie_rating[genre] = movie_rating['genres'].apply(lambda x:1 if genre in x.split("|") else 0)
-
 def display_recommendations(df, selected_genres, selected_rating):
+   
+    #if user enters both fields
     if selected_genres and selected_rating:
+        #convert to float
         selected_rating = float(selected_rating)
         
+        #check if all genres are present in a movie and the rating is >= chosen rating
         filtered_movies = df[(df[selected_genres].sum(axis=1) == len(selected_genres)) & (df['rating'] >= selected_rating)]
         
+        #display reccomendations if there are results
         if not filtered_movies.empty:
+
+            #balloons to celebrate!
             st.balloons()
             st.write("Your Personalized Reccomendations:")
+
+            #display a table with the movie titles, genres, and ratings
             st.table(filtered_movies[['title', 'genres', 'rating']])
         else:
             st.error("No Novies Found :(")
@@ -55,4 +49,4 @@ def display_recommendations(df, selected_genres, selected_rating):
 if generate_button:
     display_recommendations(movie_rating, selected_genres, selected_rating)
    
-          
+
